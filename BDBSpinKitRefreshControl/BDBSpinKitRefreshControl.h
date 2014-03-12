@@ -24,7 +24,6 @@
 
 #import "RTSpinKitView.h"
 
-
 #pragma mark -
 @interface BDBSpinKitRefreshControl : UIRefreshControl
 

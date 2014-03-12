@@ -22,20 +22,19 @@
 
 #import "BDBSpinKitRefreshControl.h"
 
+static void * const kBDBSpinKitRefreshControlKVOContext = (void *)&kBDBSpinKitRefreshControlKVOContext;
 
 #pragma mark -
 @implementation BDBSpinKitRefreshControl
 
-+ (instancetype)refreshControlWithStyle:(RTSpinKitViewStyle)style color:(UIColor *)color
-{
++ (instancetype)refreshControlWithStyle:(RTSpinKitViewStyle)style color:(UIColor *)color {
     return [[[self class] alloc] initWithStyle:style color:color];
 }
 
-- (id)initWithStyle:(RTSpinKitViewStyle)style color:(UIColor *)color
-{
+- (id)initWithStyle:(RTSpinKitViewStyle)style color:(UIColor *)color {
     self = [super init];
-    if (self)
-    {
+
+    if (self) {
         self.tintColor = [UIColor clearColor];
 
         _spinner = [[RTSpinKitView alloc] initWithStyle:style color:color];
@@ -44,20 +43,60 @@
             UIViewAutoresizingFlexibleRightMargin |
             UIViewAutoresizingFlexibleTopMargin |
             UIViewAutoresizingFlexibleBottomMargin;
+
+        [super addObserver:self
+                forKeyPath:@"hidden"
+                   options:NSKeyValueObservingOptionNew
+                   context:kBDBSpinKitRefreshControlKVOContext];
     }
+
     return self;
 }
 
-- (void)beginRefreshing
+- (void)dealloc
 {
-    if (!self.spinner.superview)
-    {
+    [super removeObserver:self
+               forKeyPath:@"hidden"
+                  context:kBDBSpinKitRefreshControlKVOContext];
+}
+
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    [super willMoveToSuperview:newSuperview];
+
+    if (self.spinner.superview) {
+        [self.spinner removeFromSuperview];
+    }
+}
+
+- (void)didMoveToSuperview {
+    [super didMoveToSuperview];
+
+    if (!self.spinner.superview) {
         UIView *parentView = self.subviews.lastObject;
         [parentView addSubview:self.spinner];
         self.spinner.center = parentView.center;
     }
+}
 
-    [super beginRefreshing];
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == kBDBSpinKitRefreshControlKVOContext) {
+        if ([keyPath isEqualToString:@"hidden"]) {
+            if ([change[NSKeyValueChangeNewKey] boolValue] == NO) {
+                [self.spinner startAnimating];
+            } else {
+                [self.spinner stopAnimating];
+            }
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+- (void)setTintColor:(UIColor *)tintColor
+{
+    [super setTintColor:tintColor];
+    self.spinner.color = tintColor;
 }
 
 @end
