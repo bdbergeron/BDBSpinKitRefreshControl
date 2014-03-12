@@ -1,0 +1,17 @@
+PODS:
+  - BDBSpinKitRefreshControl (1.0.0):
+    - SpinKit (~> 1.0.0)
+  - SpinKit (1.0.1)
+
+DEPENDENCIES:
+  - BDBSpinKitRefreshControl (from `../`)
+
+EXTERNAL SOURCES:
+  BDBSpinKitRefreshControl:
+    :path: ../
+
+SPEC CHECKSUMS:
+  BDBSpinKitRefreshControl: f09ee45d156056672caef9c14a4bde01fdafe0fc
+  SpinKit: c7490233be81d8daf41da05dc463351423658aad
+
+COCOAPODS: 0.29.0
