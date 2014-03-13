@@ -1,6 +1,6 @@
 # BDBSpinKitRefreshControl
 
-BDBSpinKitRefreshControl is a drop-in replacement for`UIRefreshControl that utilizes the fantastic [SpinKit](http://https://github.com/tobiasahlin/SpinKit) progress indicators.
+BDBSpinKitRefreshControl is a drop-in replacement for`UIRefreshControl that utilizes the fantastic [SpinKit](https://github.com/tobiasahlin/SpinKit) progress indicators.
 
 ![image](https://dl.dropboxusercontent.com/u/6225/GitHub/BDBSpinKitRefreshControl/bounce.gif)
 ![image](https://dl.dropboxusercontent.com/u/6225/GitHub/BDBSpinKitRefreshControl/wave.gif)
