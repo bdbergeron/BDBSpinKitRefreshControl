@@ -35,7 +35,7 @@ static void * const kBDBSpinKitRefreshControlKVOContext = (void *)&kBDBSpinKitRe
     self = [super init];
 
     if (self) {
-        self.tintColor = [UIColor clearColor];
+        super.tintColor = [UIColor clearColor];
 
         _spinner = [[RTSpinKitView alloc] initWithStyle:style color:color];
         _spinner.autoresizingMask =
@@ -93,9 +93,7 @@ static void * const kBDBSpinKitRefreshControlKVOContext = (void *)&kBDBSpinKitRe
     }
 }
 
-- (void)setTintColor:(UIColor *)tintColor
-{
-    [super setTintColor:tintColor];
+- (void)setTintColor:(UIColor *)tintColor {
     self.spinner.color = tintColor;
 }
 

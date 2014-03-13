@@ -77,4 +77,9 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    float percent = ((float)(indexPath.row + 1) / self.objects.count);
+    self.refreshControl.tintColor = [UIColor colorWithHue:percent saturation:1.0f brightness:1.0f alpha:1.0f];
+}
+
 @end
