@@ -23,6 +23,16 @@
 #import "BDBSpinKitRefreshControl.h"
 
 static void * const kBDBSpinKitRefreshControlKVOContext = (void *)&kBDBSpinKitRefreshControlKVOContext;
+static NSString * const kHidden = @"hidden";
+
+#pragma mark -
+@interface BDBSpinKitRefreshControl ()
+
+@property (nonatomic) UIView *originalSpinner;
+
+@property (nonatomic) UIColor *color;
+
+@end
 
 #pragma mark -
 @implementation BDBSpinKitRefreshControl
@@ -38,15 +48,13 @@ static void * const kBDBSpinKitRefreshControlKVOContext = (void *)&kBDBSpinKitRe
         super.tintColor = [UIColor clearColor];
 
         _spinner = [[RTSpinKitView alloc] initWithStyle:style color:color];
-        _spinner.autoresizingMask =
-            UIViewAutoresizingFlexibleLeftMargin |
-            UIViewAutoresizingFlexibleRightMargin |
-            UIViewAutoresizingFlexibleTopMargin |
-            UIViewAutoresizingFlexibleBottomMargin;
+
+        _color = color;
+        _shouldChangeColorInstantly = false;
 
         [super addObserver:self
-                forKeyPath:@"hidden"
-                   options:NSKeyValueObservingOptionNew
+                forKeyPath:kHidden
+                   options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
                    context:kBDBSpinKitRefreshControlKVOContext];
     }
 
@@ -55,9 +63,12 @@ static void * const kBDBSpinKitRefreshControlKVOContext = (void *)&kBDBSpinKitRe
 
 - (void)dealloc
 {
-    [super removeObserver:self
-               forKeyPath:@"hidden"
-                  context:kBDBSpinKitRefreshControlKVOContext];
+    @try {
+        [super removeObserver:self
+                   forKeyPath:kHidden
+                      context:kBDBSpinKitRefreshControlKVOContext];
+    }
+    @catch (NSException * __unused exception) {}
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -71,21 +82,41 @@ static void * const kBDBSpinKitRefreshControlKVOContext = (void *)&kBDBSpinKitRe
 - (void)didMoveToSuperview {
     [super didMoveToSuperview];
 
-    if (!self.spinner.superview) {
-        UIView *parentView = self.subviews.lastObject;
-        [parentView addSubview:self.spinner];
-        self.spinner.center = parentView.center;
+    UIView *contentView = self.subviews.lastObject;
+    UIView *indicatorViewContainer = contentView.subviews.firstObject;
+    if (indicatorViewContainer) {
+        for (UIView *subview in indicatorViewContainer.subviews) {
+            if ([subview isKindOfClass:NSClassFromString(@"_UIRefreshControlModernReplicatorView")]) {
+                self.originalSpinner = subview;
+                [subview.superview addSubview:self.spinner];
+                self.spinner.center = subview.center;
+            }
+        }
     }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == kBDBSpinKitRefreshControlKVOContext) {
-        if ([keyPath isEqualToString:@"hidden"]) {
-            if ([change[NSKeyValueChangeNewKey] boolValue] == NO) {
-                [self.spinner startAnimating];
-            } else {
-                [self.spinner stopAnimating];
+        if ([object isKindOfClass:[self class]]) {
+            if ([keyPath isEqualToString:kHidden]) {
+                BOOL isHidden = [change[NSKeyValueChangeOldKey] boolValue];
+                BOOL willHide = [change[NSKeyValueChangeNewKey] boolValue];
+
+                if (isHidden && !willHide) {
+                    self.spinner.color = self.color;
+                    [self.spinner startAnimating];
+
+                    if ([self.delegate respondsToSelector:@selector(didShowRefreshControl)]) {
+                        [self.delegate didShowRefreshControl];
+                    }
+                } else if (!isHidden && willHide) {
+                    [self.spinner stopAnimating];
+
+                    if ([self.delegate respondsToSelector:@selector(didHideRefreshControl)]) {
+                        [self.delegate didHideRefreshControl];
+                    }
+                }
             }
         }
     } else {
@@ -93,8 +124,15 @@ static void * const kBDBSpinKitRefreshControlKVOContext = (void *)&kBDBSpinKitRe
     }
 }
 
-- (void)setTintColor:(UIColor *)tintColor {
-    self.spinner.color = tintColor;
+- (void)setTintColor:(UIColor *)color {
+    _color = color;
+    if (self.shouldChangeColorInstantly || self.spinner.hidden) {
+        self.spinner.color = color;
+    }
+}
+
+- (UIColor *)tintColor {
+    return self.color;
 }
 
 @end

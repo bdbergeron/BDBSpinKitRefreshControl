@@ -25,12 +25,25 @@
 #import "RTSpinKitView.h"
 
 #pragma mark -
+@protocol BDBSpinKitRefreshControlDelegate
+<NSObject>
+
+@optional
+- (void)didShowRefreshControl;
+- (void)didHideRefreshControl;
+
+@end
+
+#pragma mark -
 @interface BDBSpinKitRefreshControl : UIRefreshControl
+
+@property (nonatomic, weak) id <BDBSpinKitRefreshControlDelegate> delegate;
 
 @property (nonatomic, readonly) RTSpinKitView *spinner;
 
-+ (instancetype)refreshControlWithStyle:(RTSpinKitViewStyle)style color:(UIColor *)color;
+@property (nonatomic, assign) BOOL shouldChangeColorInstantly;
 
++ (instancetype)refreshControlWithStyle:(RTSpinKitViewStyle)style color:(UIColor *)color;
 - (id)initWithStyle:(RTSpinKitViewStyle)style color:(UIColor *)color;
 
 @end

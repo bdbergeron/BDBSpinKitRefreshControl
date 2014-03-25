@@ -22,7 +22,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "BDBSpinKitRefreshControl.h"
+
 #pragma mark -
 @interface MainViewController : UITableViewController
+<BDBSpinKitRefreshControlDelegate>
 
 @end
