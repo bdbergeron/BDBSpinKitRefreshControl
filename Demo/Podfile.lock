@@ -1,12 +1,10 @@
 PODS:
   - BDBSpinKitRefreshControl (1.0.0):
     - SpinKit (~> 1.0.0)
-  - SparkInspector (1.2.2)
   - SpinKit (1.0.1)
 
 DEPENDENCIES:
   - BDBSpinKitRefreshControl (from `../`)
-  - SparkInspector
 
 EXTERNAL SOURCES:
   BDBSpinKitRefreshControl:
@@ -14,7 +12,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BDBSpinKitRefreshControl: f09ee45d156056672caef9c14a4bde01fdafe0fc
-  SparkInspector: 4bd040e553e958cabeb898301d2947f2be93144b
   SpinKit: c7490233be81d8daf41da05dc463351423658aad
 
 COCOAPODS: 0.29.0

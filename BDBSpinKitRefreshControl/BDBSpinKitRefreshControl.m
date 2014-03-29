@@ -28,8 +28,6 @@ static NSString * const kHidden = @"hidden";
 #pragma mark -
 @interface BDBSpinKitRefreshControl ()
 
-@property (nonatomic) UIView *originalSpinner;
-
 @property (nonatomic) UIColor *color;
 
 @end
@@ -82,17 +80,15 @@ static NSString * const kHidden = @"hidden";
 - (void)didMoveToSuperview {
     [super didMoveToSuperview];
 
-    UIView *contentView = self.subviews.lastObject;
-    UIView *indicatorViewContainer = contentView.subviews.firstObject;
-    if (indicatorViewContainer) {
-        for (UIView *subview in indicatorViewContainer.subviews) {
-            if ([subview isKindOfClass:NSClassFromString(@"_UIRefreshControlModernReplicatorView")]) {
-                self.originalSpinner = subview;
-                [subview.superview addSubview:self.spinner];
-                self.spinner.center = subview.center;
-            }
-        }
+    UIView *modernContentView = self.subviews.lastObject;
+    UIView *containerView = modernContentView.subviews.firstObject;
+
+    if (containerView) {
+        [containerView removeFromSuperview];
     }
+
+    [modernContentView addSubview:self.spinner];
+    self.spinner.center = modernContentView.center;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -126,6 +122,7 @@ static NSString * const kHidden = @"hidden";
 
 - (void)setTintColor:(UIColor *)color {
     _color = color;
+
     if (self.shouldChangeColorInstantly || self.spinner.hidden) {
         self.spinner.color = color;
     }

@@ -58,10 +58,6 @@ static void * const kKVOContext = (void *)&kKVOContext;
     self.tableView.rowHeight = (self.tableView.bounds.size.height - 44.0f) / self.objects.count;
 }
 
-- (void)dealloc {
-    [self.refreshControl.spinner removeObserver:self forKeyPath:@"hidden" context:kKVOContext];
-}
-
 - (void)refresh {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.refreshControl endRefreshing];
