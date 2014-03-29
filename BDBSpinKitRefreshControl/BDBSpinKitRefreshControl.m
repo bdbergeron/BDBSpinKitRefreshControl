@@ -72,9 +72,7 @@ static NSString * const kHidden = @"hidden";
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
 
-    if (self.spinner.superview) {
-        [self.spinner removeFromSuperview];
-    }
+    [self.spinner removeFromSuperview];
 }
 
 - (void)didMoveToSuperview {
