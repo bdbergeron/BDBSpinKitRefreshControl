@@ -43,6 +43,7 @@
 
 @property (nonatomic, readonly) RTSpinKitView *spinner;
 
+@property (nonatomic) UIColor *tintColor;
 @property (nonatomic, assign) BOOL shouldChangeColorInstantly;
 
 #pragma mark Initialization
