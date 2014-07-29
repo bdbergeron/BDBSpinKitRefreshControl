@@ -1,0 +1,6 @@
+@import Darwin.Availability;
+
+#ifdef __OBJC__
+    @import UIKit;
+    @import Foundation;
+#endif

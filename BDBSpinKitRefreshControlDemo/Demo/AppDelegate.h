@@ -1,5 +1,5 @@
 //
-//  MainViewController.h
+//  AppDelegate.h
 //
 //  Copyright (c) 2014 Bradley David Bergeron
 //
@@ -20,12 +20,13 @@
 //  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
-#import "BDBSpinKitRefreshControl.h"
 
 #pragma mark -
-@interface MainViewController : UITableViewController
-<BDBSpinKitRefreshControlDelegate>
+@interface AppDelegate : UIResponder
+<UIApplicationDelegate>
+
+@property (nonatomic) UIWindow *window;
 
 @end

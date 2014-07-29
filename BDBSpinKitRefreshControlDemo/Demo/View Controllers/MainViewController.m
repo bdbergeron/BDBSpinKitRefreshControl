@@ -22,7 +22,6 @@
 
 #import "MainViewController.h"
 
-static void * const kKVOContext = (void *)&kKVOContext;
 
 #pragma mark -
 @interface MainViewController ()
@@ -34,37 +33,63 @@ static void * const kKVOContext = (void *)&kKVOContext;
 
 @end
 
+
 #pragma mark -
 @implementation MainViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+#pragma mark Initialization
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
 
-    self.title = @"BDBSpinKitRefreshControl";
+    if (self) {
+        _objects = [NSMutableArray array];
 
-    self.objects = [NSMutableArray array];
-    for (int i = 1; i <= 8; i++) {
-        NSString *label = [NSString stringWithFormat:@"Item %i", i];
-        [self.objects addObject:label];
+        for (int i = 1; i <= 8; i++) {
+            [_objects addObject:[NSString stringWithFormat:@"Item %i", i]];
+        }
     }
 
-    UIColor *color = [UIColor colorWithRed:0.937f green:0.263f blue:0.157f alpha:1.0f];
+    return self;
+}
+
+#pragma mark View Lifecycle
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.title = NSLocalizedString(@"BDBSpinKitRefreshControl", nil);
+
+    UIColor *color = [UIColor colorWithRed:0.937f green:0.263f blue:0.157f alpha:1.f];
     self.refreshControl = [BDBSpinKitRefreshControl refreshControlWithStyle:RTSpinKitViewStyleBounce
                                                                       color:color];
     self.refreshControl.delegate = self;
     self.refreshControl.shouldChangeColorInstantly = YES;
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 
-    self.tableView.rowHeight = (self.tableView.bounds.size.height - 44.0f) / self.objects.count;
+    self.tableView.rowHeight = (self.tableView.bounds.size.height - 44.f) / self.objects.count;
 }
 
-- (void)refresh {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+#pragma mark Refresh Control
+- (void)refresh
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.refreshControl endRefreshing];
     });
 }
 
-- (void)didShowRefreshControl {
+- (void)doubleRainbow
+{
+    CGFloat h, s, v, a;
+    [self.refreshControl.tintColor getHue:&h saturation:&s brightness:&v alpha:&a];
+
+    h = fmodf((h + 0.025f), 1.f);
+    self.refreshControl.tintColor = [UIColor colorWithHue:h saturation:s brightness:v alpha:a];
+}
+
+#pragma mark BDBSpinKitRefreshControl Delegate Methods
+- (void)didShowRefreshControl
+{
     self.colorTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f
                                                        target:self
                                                      selector:@selector(doubleRainbow)
@@ -72,27 +97,24 @@ static void * const kKVOContext = (void *)&kKVOContext;
                                                       repeats:YES];
 }
 
-- (void)didHideRefreshControl {
+- (void)didHideRefreshControl
+{
     [self.colorTimer invalidate];
 }
 
-- (void)doubleRainbow {
-    CGFloat h, s, v, a;
-    [self.refreshControl.tintColor getHue:&h saturation:&s brightness:&v alpha:&a];
-    h = fmodf((h + 0.025f), 1.0f);
-    self.refreshControl.tintColor = [UIColor colorWithHue:h saturation:s brightness:v alpha:a];
-}
-
-#pragma mark TableView Data Source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+#pragma mark UITableView Data Source / Delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return self.objects.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
 
     cell.textLabel.text = self.objects[indexPath.row];
@@ -100,9 +122,10 @@ static void * const kKVOContext = (void *)&kKVOContext;
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     float percent = ((float)(indexPath.row + 1) / self.objects.count);
-    self.refreshControl.tintColor = [UIColor colorWithHue:percent saturation:1.0f brightness:1.0f alpha:1.0f];
+    self.refreshControl.tintColor = [UIColor colorWithHue:percent saturation:1.f brightness:1.f alpha:1.f];
 }
 
 @end

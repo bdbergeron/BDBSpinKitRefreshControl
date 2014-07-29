@@ -1,5 +1,5 @@
 //
-//  AppDelegate.m
+//  MainViewController.h
 //
 //  Copyright (c) 2014 Bradley David Bergeron
 //
@@ -20,22 +20,16 @@
 //  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import "AppDelegate.h"
-#import "MainViewController.h"
+@import UIKit;
+
+#import "BDBSpinKitRefreshControl.h"
+
 
 #pragma mark -
-@implementation AppDelegate
+@interface MainViewController : UITableViewController
+<BDBSpinKitRefreshControlDelegate>
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.937f green:0.263f blue:0.157f alpha:1.0f]];
-
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MainViewController new]];
-    [self.window makeKeyAndVisible];
-    return YES;
-}
+#pragma mark Initialization
+- (id)initWithStyle:(UITableViewStyle)style;
 
 @end

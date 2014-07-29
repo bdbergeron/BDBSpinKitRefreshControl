@@ -24,8 +24,8 @@
 		E843EE1718D10F1E0089064E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E843EE1818D10F1E0089064E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E843EE1A18D10F1E0089064E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		E843EE1C18D10F1E0089064E /* Demo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Demo-Info.plist"; sourceTree = "<group>"; };
-		E843EE1D18D10F1E0089064E /* Demo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Demo-Prefix.pch"; sourceTree = "<group>"; };
+		E843EE1C18D10F1E0089064E /* BDBSpinKitRefreshControlDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BDBSpinKitRefreshControlDemo-Info.plist"; sourceTree = "<group>"; };
+		E843EE1D18D10F1E0089064E /* BDBSpinKitRefreshControlDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BDBSpinKitRefreshControlDemo-Prefix.pch"; sourceTree = "<group>"; };
 		E843EE1F18D10F1E0089064E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E843EE2018D10F1E0089064E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E861FDED18D10E1E00A1BC58 /* BDBSpinKitRefreshControlDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BDBSpinKitRefreshControlDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,9 +55,9 @@
 			isa = PBXGroup;
 			children = (
 				E843EE1918D10F1E0089064E /* Resources */,
+				E88EBD4018D110240014616A /* View Controllers */,
 				E843EE1718D10F1E0089064E /* AppDelegate.h */,
 				E843EE1818D10F1E0089064E /* AppDelegate.m */,
-				E88EBD4018D110240014616A /* View Controllers */,
 				E843EE1B18D10F1E0089064E /* Supporting Files */,
 			);
 			path = Demo;
@@ -74,8 +74,8 @@
 		E843EE1B18D10F1E0089064E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E843EE1C18D10F1E0089064E /* Demo-Info.plist */,
-				E843EE1D18D10F1E0089064E /* Demo-Prefix.pch */,
+				E843EE1C18D10F1E0089064E /* BDBSpinKitRefreshControlDemo-Info.plist */,
+				E843EE1D18D10F1E0089064E /* BDBSpinKitRefreshControlDemo-Prefix.pch */,
 				E843EE1E18D10F1E0089064E /* InfoPlist.strings */,
 				E843EE2018D10F1E0089064E /* main.m */,
 			);
@@ -123,9 +123,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E861FDEC18D10E1E00A1BC58 /* BDBSpinKitRefreshControlDemo */ = {
+		E861FDEC18D10E1E00A1BC58 /* RefreshControlDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E861FE1918D10E1F00A1BC58 /* Build configuration list for PBXNativeTarget "BDBSpinKitRefreshControlDemo" */;
+			buildConfigurationList = E861FE1918D10E1F00A1BC58 /* Build configuration list for PBXNativeTarget "RefreshControlDemo" */;
 			buildPhases = (
 				21447E2E888D4CDFB7C4F007 /* Check Pods Manifest.lock */,
 				E861FDE918D10E1E00A1BC58 /* Sources */,
@@ -137,7 +137,7 @@
 			);
 			dependencies = (
 			);
-			name = BDBSpinKitRefreshControlDemo;
+			name = RefreshControlDemo;
 			productName = BDBSpinKitRefreshControlDemo;
 			productReference = E861FDED18D10E1E00A1BC58 /* BDBSpinKitRefreshControlDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -163,7 +163,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E861FDEC18D10E1E00A1BC58 /* BDBSpinKitRefreshControlDemo */,
+				E861FDEC18D10E1E00A1BC58 /* RefreshControlDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -317,8 +317,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/Demo/Supporting Files/Demo-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Demo/Supporting Files/Demo-Info.plist";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Demo/Supporting Files/BDBSpinKitRefreshControlDemo-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/Demo/Supporting Files/BDBSpinKitRefreshControlDemo-Info.plist";
 				PRODUCT_NAME = BDBSpinKitRefreshControlDemo;
 				WRAPPER_EXTENSION = app;
 			};
@@ -331,8 +331,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/Demo/Supporting Files/Demo-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/Demo/Supporting Files/Demo-Info.plist";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/Demo/Supporting Files/BDBSpinKitRefreshControlDemo-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/Demo/Supporting Files/BDBSpinKitRefreshControlDemo-Info.plist";
 				PRODUCT_NAME = BDBSpinKitRefreshControlDemo;
 				WRAPPER_EXTENSION = app;
 			};
@@ -350,7 +350,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E861FE1918D10E1F00A1BC58 /* Build configuration list for PBXNativeTarget "BDBSpinKitRefreshControlDemo" */ = {
+		E861FE1918D10E1F00A1BC58 /* Build configuration list for PBXNativeTarget "RefreshControlDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E861FE1A18D10E1F00A1BC58 /* Debug */,
