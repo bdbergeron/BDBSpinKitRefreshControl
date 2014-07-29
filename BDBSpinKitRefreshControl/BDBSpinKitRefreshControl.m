@@ -22,8 +22,11 @@
 
 #import "BDBSpinKitRefreshControl.h"
 
+
 static void * const kBDBSpinKitRefreshControlKVOContext = (void *)&kBDBSpinKitRefreshControlKVOContext;
-static NSString * const kHidden = @"hidden";
+
+static NSString * const kKVOKeyPathHidden = @"hidden";
+
 
 #pragma mark -
 @interface BDBSpinKitRefreshControl ()
@@ -32,14 +35,20 @@ static NSString * const kHidden = @"hidden";
 
 @end
 
+
 #pragma mark -
 @implementation BDBSpinKitRefreshControl
 
-+ (instancetype)refreshControlWithStyle:(RTSpinKitViewStyle)style color:(UIColor *)color {
+#pragma mark Initialization
++ (instancetype)refreshControlWithStyle:(RTSpinKitViewStyle)style
+                                  color:(UIColor *)color
+{
     return [[[self class] alloc] initWithStyle:style color:color];
 }
 
-- (id)initWithStyle:(RTSpinKitViewStyle)style color:(UIColor *)color {
+- (instancetype)initWithStyle:(RTSpinKitViewStyle)style
+                        color:(UIColor *)color
+{
     self = [super init];
 
     if (self) {
@@ -51,7 +60,7 @@ static NSString * const kHidden = @"hidden";
         _shouldChangeColorInstantly = false;
 
         [super addObserver:self
-                forKeyPath:kHidden
+                forKeyPath:kKVOKeyPathHidden
                    options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew
                    context:kBDBSpinKitRefreshControlKVOContext];
     }
@@ -63,19 +72,24 @@ static NSString * const kHidden = @"hidden";
 {
     @try {
         [super removeObserver:self
-                   forKeyPath:kHidden
+                   forKeyPath:kKVOKeyPathHidden
                       context:kBDBSpinKitRefreshControlKVOContext];
     }
-    @catch (NSException * __unused exception) {}
+    @catch (NSException * __unused exception) {
+        // Ignore
+    }
 }
 
-- (void)willMoveToSuperview:(UIView *)newSuperview {
+#pragma mark View Lifecycle
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
     [super willMoveToSuperview:newSuperview];
 
     [self.spinner removeFromSuperview];
 }
 
-- (void)didMoveToSuperview {
+- (void)didMoveToSuperview
+{
     [super didMoveToSuperview];
 
     UIView *modernContentView = self.subviews.lastObject;
@@ -89,11 +103,15 @@ static NSString * const kHidden = @"hidden";
     self.spinner.center = modernContentView.center;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+#pragma mark KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
 {
     if (context == kBDBSpinKitRefreshControlKVOContext) {
         if ([object isKindOfClass:[self class]]) {
-            if ([keyPath isEqualToString:kHidden]) {
+            if ([keyPath isEqualToString:kKVOKeyPathHidden]) {
                 BOOL isHidden = [change[NSKeyValueChangeOldKey] boolValue];
                 BOOL willHide = [change[NSKeyValueChangeNewKey] boolValue];
 
@@ -114,11 +132,16 @@ static NSString * const kHidden = @"hidden";
             }
         }
     } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        [super observeValueForKeyPath:keyPath
+                             ofObject:object
+                               change:change
+                              context:context];
     }
 }
 
-- (void)setTintColor:(UIColor *)color {
+#pragma mark Overridden Properties
+- (void)setTintColor:(UIColor *)color
+{
     _color = color;
 
     if (self.shouldChangeColorInstantly || self.spinner.hidden) {
@@ -126,7 +149,8 @@ static NSString * const kHidden = @"hidden";
     }
 }
 
-- (UIColor *)tintColor {
+- (UIColor *)tintColor
+{
     return self.color;
 }
 
