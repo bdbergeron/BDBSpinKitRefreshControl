@@ -55,6 +55,7 @@ static NSString * const kKVOKeyPathHidden = @"hidden";
         super.tintColor = [UIColor clearColor];
 
         _spinner = [[RTSpinKitView alloc] initWithStyle:style color:color];
+        _spinner.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
 
         _color = color;
         _shouldChangeColorInstantly = false;
