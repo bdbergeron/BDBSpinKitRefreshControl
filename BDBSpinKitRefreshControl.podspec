@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name      = 'BDBSpinKitRefreshControl'
-  s.version   = '1.0.2'
+  s.version   = '1.0.3'
   s.license   = 'MIT'
   s.summary   = 'A UIRefreshControl replacement that utilizes the fantastic SpinKit progress indicators.'
   s.homepage  = 'https://github.com/bdbergeron/BDBSpinKitRefreshControl'
