@@ -22,7 +22,7 @@
 
 @import UIKit;
 
-#import "RTSpinKitView.h"
+#import <SpinKit/RTSpinKitView.h>
 
 
 #pragma mark -
